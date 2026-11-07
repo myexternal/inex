@@ -91,7 +91,9 @@
     $('[data-z-text]').textContent = z.p;
     $('[data-z-list]').innerHTML = z.l.map(([a, b]) => `<li>${a}<small>${b}</small></li>`).join('');
     $('[data-z-cap]').textContent = z.cap;
-    $('[data-z-thumbs]').innerHTML = z.th.map(n => `<figure><img src="media/photo/${n}.webp" alt="" loading="lazy"></figure>`).join('');
+    $('[data-z-thumbs]').innerHTML = z.th.map(n => `<figure><img src="media/thumb/${n}.webp" srcset="media/thumb/${n}.webp 360w, media/photo/${n}.webp 1200w" sizes="(max-width:860px) 30vw, 16vw" alt="" loading="lazy"></figure>`).join('');
+    // first paint: the plate in the HTML already shows this zone
+    if (zImg.getAttribute('src') === z.img) return;
     // swap the plate image with a short blur crossfade
     clearTimeout(swapT);
     plate.classList.add('is-swapping');
@@ -107,8 +109,10 @@
     setZone((zone + (e.key === 'ArrowRight' ? 1 : 4)) % 5, true);
   });
   setZone(2); // open on Cook: the zone people picture first
-  // preload other plates once idle
-  (window.requestIdleCallback || setTimeout)(() => ZONES.forEach(z => { const i = new Image(); i.src = z.img; }));
+  // fetch the other plates only once someone reaches for the tabs (saves ~600 KB for people who scroll past)
+  let preloaded = false;
+  const preload = () => { if (preloaded) return; preloaded = true; ZONES.forEach(z => { const i = new Image(); i.src = z.img; }); };
+  ['pointerenter', 'touchstart', 'focusin'].forEach(ev => rail.addEventListener(ev, preload, { passive: true, once: true }));
 
   /* ---------- 3D steps (desktop) ---------- */
   const steps = $$('[data-step]');
@@ -214,4 +218,5 @@
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
   navState(); splitState(); sweep();
+  window.__inexReady = true;
 })();

@@ -16,6 +16,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Geologica:wght,CRSV,SHRP@100..900,0..1,0..100&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <link rel="preload" as="image" href="media/photo/p04.webp" fetchpriority="high">
+<!-- hide-then-reveal styles only apply once app.js is running; if it never runs, content stays visible -->
+<script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__inexReady)document.documentElement.classList.remove("js")},5000)</script>
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 </head>
 <body>
@@ -24,8 +26,8 @@
 
 <header class="nav" data-nav>
   <a class="nav__logo" href="#top" aria-label="Inex Kitchen Solutions, home">
-    <img class="logo--light" src="media/logo-light.png" alt="" width="132" height="48">
-    <img class="logo--dark" src="media/logo-dark.png" alt="" width="132" height="48">
+    <img class="logo--light" src="media/logo-light-nav.webp" alt="" width="132" height="48">
+    <img class="logo--dark" src="media/logo-dark-nav.webp" alt="" width="132" height="48">
   </a>
   <nav class="nav__links" aria-label="Main">
     <a href="#kitchens">Kitchens</a>
@@ -104,7 +106,7 @@
         <ul class="zones__list" data-z-list></ul>
       </div>
       <figure class="plate">
-        <img data-z-img src="media/cut/p44.webp" alt="" width="694" height="1280">
+        <img data-z-img src="media/cut/p02.webp" alt="Four-burner range with backsplash" width="1400" height="775">
         <figcaption data-z-cap></figcaption>
         <span class="plate__dim plate__dim--w" aria-hidden="true"><i>W</i></span>
         <span class="plate__dim plate__dim--h" aria-hidden="true"><i>H</i></span>
@@ -119,7 +121,7 @@
 <section class="build" id="build" aria-labelledby="build-h">
   <div class="build__stage" data-stage>
     <canvas class="build__canvas" data-canvas aria-label="3D model of a stainless steel two-burner wok table made by Inex. Drag to turn it."></canvas>
-    <img class="build__fallback" draggable="false" src="media/cut/p25.webp" alt="Two-burner wok table made by Inex" width="1388" height="1059" data-fallback>
+    <img class="build__fallback" draggable="false" loading="lazy" src="media/cut/p25.webp" alt="Two-burner wok table made by Inex" width="1388" height="1059" data-fallback>
     <p class="build__hint" aria-hidden="true">Drag to turn</p>
   </div>
   <div class="build__steps">
@@ -150,15 +152,15 @@
       <span class="h__bold">A workshop.</span>
     </h2>
     <div class="collage">
-      <figure class="c c--a" data-cut><img src="media/photo/p37.webp" alt="Inex fabricators assembling a stainless steel double sink" loading="lazy" width="1200" height="1600"></figure>
+      <figure class="c c--a" data-cut><img src="media/photo/p37.webp" srcset="media/photo/sm/p37.webp 828w, media/photo/p37.webp 960w" sizes="(max-width:860px) 66vw, 40vw" alt="Inex fabricators assembling a stainless steel double sink" loading="lazy" width="1200" height="1600"></figure>
       <div class="c c--text" data-reveal>
         <p class="big">Everything starts on our floor at <b>92 Heenatigala Road, Unawatuna</b>.</p>
         <p>Our crew cuts, folds, welds and polishes each piece, then delivers and installs it themselves. When something needs fixing years later, the same team comes back.</p>
       </div>
-      <figure class="c c--b" data-cut><img src="media/photo/p42.webp" alt="A fabricator grinding a stainless steel rack frame" loading="lazy" width="960" height="1600"></figure>
-      <figure class="c c--c" data-cut><img src="media/photo/p14.webp" alt="Inside the Inex workshop with a sheet folding machine" loading="lazy" width="1600" height="1200"><figcaption>The workshop floor</figcaption></figure>
-      <figure class="c c--d" data-cut><img src="media/photo/p53.webp" alt="The crew building a display counter with a canopy" loading="lazy" width="1200" height="1600"></figure>
-      <figure class="c c--e" data-cut><img src="media/photo/p12.webp" alt="The Inex building on Heenatigala Road, Unawatuna" loading="lazy" width="1600" height="1200"><figcaption>92 Heenatigala Rd</figcaption></figure>
+      <figure class="c c--b" data-cut><img src="media/photo/p42.webp" srcset="media/photo/sm/p42.webp 828w, media/photo/p42.webp 1200w" sizes="(max-width:860px) 33vw, 25vw" alt="A fabricator grinding a stainless steel rack frame" loading="lazy" width="960" height="1600"></figure>
+      <figure class="c c--c" data-cut><img src="media/photo/p14.webp" srcset="media/photo/sm/p14.webp 828w, media/photo/p14.webp 1600w" sizes="(max-width:860px) 100vw, 50vw" alt="Inside the Inex workshop with a sheet folding machine" loading="lazy" width="1600" height="1200"><figcaption>The workshop floor</figcaption></figure>
+      <figure class="c c--d" data-cut><img src="media/photo/p53.webp" srcset="media/photo/sm/p53.webp 828w, media/photo/p53.webp 1200w" sizes="(max-width:860px) 33vw, 25vw" alt="The crew building a display counter with a canopy" loading="lazy" width="1200" height="1600"></figure>
+      <figure class="c c--e" data-cut><img src="media/photo/p12.webp" srcset="media/photo/sm/p12.webp 828w, media/photo/p12.webp 1600w" sizes="(max-width:860px) 100vw, 50vw" alt="The Inex building on Heenatigala Road, Unawatuna" loading="lazy" width="1600" height="1200"><figcaption>92 Heenatigala Rd</figcaption></figure>
     </div>
   </div>
 </section>
@@ -184,16 +186,16 @@
       <span class="h__bold">build for</span>
     </h2>
     <ul class="sectors__list">
-      <li data-img="media/photo/p28.webp"><span class="sectors__name">Hotels and resorts</span><span class="sectors__line">Full kitchen fit-outs with hoods, burner lines and steamers.</span><img class="sectors__thumb" src="media/photo/p28.webp" alt="" loading="lazy" width="160" height="120"></li>
-      <li data-img="media/photo/p04.webp"><span class="sectors__name">Restaurants and cafés</span><span class="sectors__line">Cooking lines planned around your menu.</span><img class="sectors__thumb" src="media/photo/p04.webp" alt="" loading="lazy" width="160" height="120"></li>
-      <li data-img="media/photo/p60.webp"><span class="sectors__name">Seafood restaurants</span><span class="sectors__line">Lit fish display counters for the front of house.</span><img class="sectors__thumb" src="media/photo/p60.webp" alt="" loading="lazy" width="160" height="120"></li>
-      <li data-img="media/photo/p31.webp"><span class="sectors__name">Bakeries</span><span class="sectors__line">Work tables, racks and griddle stations.</span><img class="sectors__thumb" src="media/photo/p31.webp" alt="" loading="lazy" width="160" height="120"></li>
-      <li data-img="media/photo/p49.webp"><span class="sectors__name">Supermarkets</span><span class="sectors__line">Display and chilled counters, shelving.</span><img class="sectors__thumb" src="media/photo/p49.webp" alt="" loading="lazy" width="160" height="120"></li>
-      <li data-img="media/photo/p63.webp"><span class="sectors__name">Caterers</span><span class="sectors__line">Bain-marie and buffet counters that travel well.</span><img class="sectors__thumb" src="media/photo/p63.webp" alt="" loading="lazy" width="160" height="120"></li>
-      <li data-img="media/photo/p39.webp"><span class="sectors__name">Homes</span><span class="sectors__line">Stainless steel home kitchens and cabinets.</span><img class="sectors__thumb" src="media/photo/p39.webp" alt="" loading="lazy" width="160" height="120"></li>
+      <li data-img="media/photo/p28.webp"><span class="sectors__name">Hotels and resorts</span><span class="sectors__line">Full kitchen fit-outs with hoods, burner lines and steamers.</span><img class="sectors__thumb" src="media/thumb/p28.webp" alt="" loading="lazy" width="160" height="120"></li>
+      <li data-img="media/photo/p04.webp"><span class="sectors__name">Restaurants and cafés</span><span class="sectors__line">Cooking lines planned around your menu.</span><img class="sectors__thumb" src="media/thumb/p04.webp" alt="" loading="lazy" width="160" height="120"></li>
+      <li data-img="media/photo/p60.webp"><span class="sectors__name">Seafood restaurants</span><span class="sectors__line">Lit fish display counters for the front of house.</span><img class="sectors__thumb" src="media/thumb/p60.webp" alt="" loading="lazy" width="160" height="120"></li>
+      <li data-img="media/photo/p31.webp"><span class="sectors__name">Bakeries</span><span class="sectors__line">Work tables, racks and griddle stations.</span><img class="sectors__thumb" src="media/thumb/p31.webp" alt="" loading="lazy" width="160" height="120"></li>
+      <li data-img="media/photo/p49.webp"><span class="sectors__name">Supermarkets</span><span class="sectors__line">Display and chilled counters, shelving.</span><img class="sectors__thumb" src="media/thumb/p49.webp" alt="" loading="lazy" width="160" height="120"></li>
+      <li data-img="media/photo/p63.webp"><span class="sectors__name">Caterers</span><span class="sectors__line">Bain-marie and buffet counters that travel well.</span><img class="sectors__thumb" src="media/thumb/p63.webp" alt="" loading="lazy" width="160" height="120"></li>
+      <li data-img="media/photo/p39.webp"><span class="sectors__name">Homes</span><span class="sectors__line">Stainless steel home kitchens and cabinets.</span><img class="sectors__thumb" src="media/thumb/p39.webp" alt="" loading="lazy" width="160" height="120"></li>
     </ul>
   </div>
-  <img class="sectors__float" src="media/photo/p05.webp" alt="" aria-hidden="true" data-float>
+  <img class="sectors__float" alt="" aria-hidden="true" data-float>
 </section>
 
 <!-- 7 INSTALLED WORK -->
@@ -209,15 +211,15 @@
     </div>
   </div>
   <ul class="work__strip" data-work>
-    <li><img src="media/photo/p05.webp" alt="" loading="lazy" width="1200" height="1600"><p><b>Restaurant cooking line</b> Canopy hood, wok burners and burner range</p></li>
-    <li class="wide"><img src="media/photo/p28.webp" alt="" loading="lazy" width="1600" height="1200"><p><b>Hotel kitchen</b> Twin hoods over high-pressure burners</p></li>
+    <li><img src="media/photo/p05.webp" srcset="media/photo/sm/p05.webp 828w, media/photo/p05.webp 1200w" sizes="(max-width:860px) 75vw, 340px" alt="" loading="lazy" width="1200" height="1600"><p><b>Restaurant cooking line</b> Canopy hood, wok burners and burner range</p></li>
+    <li class="wide"><img src="media/photo/p28.webp" srcset="media/photo/sm/p28.webp 828w, media/photo/p28.webp 1600w" sizes="(max-width:860px) 75vw, 340px" alt="" loading="lazy" width="1600" height="1200"><p><b>Hotel kitchen</b> Twin hoods over high-pressure burners</p></li>
     <li><img src="media/photo/p65.webp" alt="" loading="lazy" width="864" height="1080"><p><b>Wok and burner line</b> One continuous stainless top</p></li>
     <li><img src="media/photo/p66.webp" alt="" loading="lazy" width="864" height="1080"><p><b>Three-burner range</b> With gas lines run along the wall</p></li>
-    <li class="wide"><img src="media/photo/p31.webp" alt="" loading="lazy" width="1600" height="1200"><p><b>Griddle station</b> Long griddle on a slatted stand</p></li>
-    <li class="wide"><img src="media/photo/p38.webp" alt="" loading="lazy" width="1600" height="1200"><p><b>Bar counter</b> Stainless top over under-counter fridges</p></li>
-    <li class="wide"><img src="media/photo/p63.webp" alt="" loading="lazy" width="1600" height="1200"><p><b>Food service counter</b> Bain-marie wells with a sneeze rail</p></li>
+    <li class="wide"><img src="media/photo/p31.webp" srcset="media/photo/sm/p31.webp 828w, media/photo/p31.webp 1600w" sizes="(max-width:860px) 75vw, 340px" alt="" loading="lazy" width="1600" height="1200"><p><b>Griddle station</b> Long griddle on a slatted stand</p></li>
+    <li class="wide"><img src="media/photo/p38.webp" srcset="media/photo/sm/p38.webp 828w, media/photo/p38.webp 1600w" sizes="(max-width:860px) 75vw, 340px" alt="" loading="lazy" width="1600" height="1200"><p><b>Bar counter</b> Stainless top over under-counter fridges</p></li>
+    <li class="wide"><img src="media/photo/p63.webp" srcset="media/photo/sm/p63.webp 828w, media/photo/p63.webp 1600w" sizes="(max-width:860px) 75vw, 340px" alt="" loading="lazy" width="1600" height="1200"><p><b>Food service counter</b> Bain-marie wells with a sneeze rail</p></li>
     <li class="wide"><img src="media/photo/p39.webp" alt="" loading="lazy" width="1600" height="900"><p><b>Home kitchen</b> Stainless cabinets, worktops and hood</p></li>
-    <li><img src="media/photo/p36.webp" alt="" loading="lazy" width="1600" height="1200"><p><b>Back bar</b> Sink, dishwasher bay and counter</p></li>
+    <li><img src="media/photo/p36.webp" srcset="media/photo/sm/p36.webp 828w, media/photo/p36.webp 1600w" sizes="(max-width:860px) 75vw, 340px" alt="" loading="lazy" width="1600" height="1200"><p><b>Back bar</b> Sink, dishwasher bay and counter</p></li>
   </ul>
 </section>
 
@@ -243,13 +245,13 @@
         <span class="proc__n">03</span>
         <h3>Fabrication</h3>
         <p>Built in our workshop to your measurements.</p>
-        <img src="media/photo/p35.webp" alt="Inex crew assembling a stainless table in the workshop" loading="lazy" width="960" height="1600">
+        <img src="media/photo/p35.webp" srcset="media/photo/sm/p35.webp 828w, media/photo/p35.webp 960w" sizes="(max-width:860px) 100vw, 40vw" alt="Inex crew assembling a stainless table in the workshop" loading="lazy" width="960" height="1600">
       </li>
       <li data-reveal>
         <span class="proc__n">04</span>
         <h3>Delivery and installation</h3>
         <p>We deliver, install and test everything on site.</p>
-        <img src="media/photo/p30.webp" alt="An installed hood and griddle line" loading="lazy" width="1600" height="1200">
+        <img src="media/photo/p30.webp" srcset="media/photo/sm/p30.webp 828w, media/photo/p30.webp 1600w" sizes="(max-width:860px) 100vw, 40vw" alt="An installed hood and griddle line" loading="lazy" width="1600" height="1200">
       </li>
     </ol>
 
@@ -345,7 +347,7 @@
     <div class="visit__map">
       <iframe title="Map showing Inex Kitchen Solutions in Unawatuna" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=6.021313,80.251812&z=16&output=embed"></iframe>
     </div>
-    <figure class="visit__photo"><img src="media/photo/p17.webp" alt="Heenatigala Road with the Inex building" loading="lazy" width="1200" height="1600"></figure>
+    <figure class="visit__photo"><img src="media/photo/p17.webp" srcset="media/photo/sm/p17.webp 828w, media/photo/p17.webp 1200w" sizes="30vw" alt="Heenatigala Road with the Inex building" loading="lazy" width="1200" height="1600"></figure>
   </div>
 </section>
 
@@ -353,7 +355,7 @@
 
 <footer class="foot">
   <div class="wrap">
-    <img class="foot__logo" src="media/logo-light.png" alt="Inex" width="600" height="219" loading="lazy">
+    <img class="foot__logo" src="media/logo-light.webp" alt="Inex" width="600" height="219" loading="lazy">
     <div class="foot__cols">
       <p>Inex Kitchen Solutions (Pvt) Ltd<br>Commercial kitchen equipment</p>
       <p><a href="tel:+94776654172">077 665 4172</a><br><a href="mailto:inexkitchen@gmail.com">inexkitchen@gmail.com</a></p>

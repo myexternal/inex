@@ -56,7 +56,8 @@ Design system and motion rules are in `DESIGN.md`.
 
 - All photos are from Inex (the 71 the client sent, deduplicated to 48 used or kept).
 - Higgsfield: background removal for the cut-outs and logo, plus image-to-3D for the burner table. About 30 credits.
-- The 3D model was simplified to ~170k triangles and 4.4 MB with gltf-transform.
+- The 3D model is meshopt-compressed with gltf-transform: 1.2 MB on desktop (`range.glb`), 0.4 MB on phones (`range-m.glb`). three.js only loads when a visitor nears that section.
+- Phones get smaller photos through `srcset` (`media/photo/sm/`, `media/thumb/`). The first screen downloads about 0.4 MB.
 - Fonts: Geologica, Geist and Geist Mono from Google Fonts.
 
 ## Checked

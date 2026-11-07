@@ -1,6 +1,6 @@
 /* Inex: 3D burner table (Higgsfield image-to-3D from Inex's own photo), turned by scroll and drag */
-import * as THREE from 'three';
-import { GLTFLoader } from '../vendor/jsm/loaders/GLTFLoader.js';
+// three.js (~170 KB gzipped) is only fetched when the visitor gets near this section
+let THREE;
 
 const section = document.querySelector('.build');
 const canvas = document.querySelector('[data-canvas]');
@@ -14,7 +14,7 @@ if (section && canvas && webglOK()) {
   let started = false;
   const io = new IntersectionObserver(es => {
     if (es[0].isIntersecting && !started) { started = true; init(); }
-  }, { rootMargin: '600px 0px' });
+  }, { rootMargin: innerWidth < 860 ? '300px 0px' : '600px 0px' });
   io.observe(section);
 }
 
@@ -38,8 +38,17 @@ function studio() {
 }
 
 async function init() {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   const small = innerWidth < 860;
+  let GLTFLoader, MeshoptDecoder;
+  try {
+    [THREE, { GLTFLoader }, { MeshoptDecoder }] = await Promise.all([
+      import('three'),
+      import('../vendor/jsm/loaders/GLTFLoader.js'),
+      import('../vendor/jsm/libs/meshopt_decoder.module.js'),
+    ]);
+  } catch (e) { console.warn('3D unavailable, keeping photo', e); return; }
+  // high-density phone screens don't need MSAA on top of 1.5x rendering
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: devicePixelRatio < 2, alpha: true, powerPreference: small ? 'default' : 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -53,7 +62,7 @@ async function init() {
 
   // lights: soft key + the brand's red rim from behind-right
   const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-2, 3, 2.5); scene.add(key);
-  const rim = new THREE.PointLight(0xff2a2a, 6, 6, 1.6); rim.position.set(1.4, 0.7, -1.4); scene.add(rim);
+  const rim = new THREE.PointLight(0xff2a2a, small ? 3 : 6, 6, 1.6); rim.position.set(1.4, 0.7, -1.4); scene.add(rim);
   const fill = new THREE.PointLight(0x9fb4ff, 1.2, 6, 2); fill.position.set(-1.6, 0.2, 1.2); scene.add(fill);
 
   // contact shadow
@@ -67,14 +76,18 @@ async function init() {
   const pivot = new THREE.Group(); scene.add(pivot);
   let model;
   try {
-    const gltf = await new GLTFLoader().loadAsync('media/range.glb');
+    // phones get a 0.4 MB model; desktops a finer 1.2 MB one (both meshopt-compressed)
+    const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+    const gltf = await loader.loadAsync(small ? 'media/range-m.glb' : 'media/range.glb');
     model = gltf.scene;
   } catch (e) { console.warn('3D model failed, keeping photo', e); return; }
 
   model.traverse(o => {
     if (!o.isMesh) return;
     const src = o.material;
-    // Polished stainless: keep the photo-derived texture as roughness variation, so it reads as brushed steel
+    // only the normal map is used; free the colour and ORM images straight away
+    ['map', 'metalnessMap', 'roughnessMap', 'aoMap', 'emissiveMap'].forEach(k => src[k] && src[k] !== src.normalMap && src[k].dispose());
+    src.dispose();
     o.material = new THREE.MeshStandardMaterial({
       color: 0xc8cdd3, metalness: 1, roughness: 0.36,
       normalMap: src.normalMap || null,
