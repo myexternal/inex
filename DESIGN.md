@@ -1,46 +1,44 @@
-# Inex Kitchen Solutions: design system "Sheet and Seam"
+# Inex v3 · "Forge" design system
 
-This system belongs to Inex only. It shares no skeleton, fonts or palette with Hewad Market (Apple-style scroll film), Flavours of Asia (packed boxes, condensed sign type), Nupelda (Unbounded, pizza wheel) or Ceylon Tampere CC (Mona Sans width extremes, gold lion).
+v3 replaces v2 ("Work Order") and v1 ("Sheet and Seam"). It shares no layout, type or components with them or with any other client site.
 
 ## Idea
-Inex cuts, folds and welds stainless steel. The page is built the same way: flat sheets of colour, hard chamfered corners instead of rounded ones, and one red diagonal seam taken from the X in their logo. Hierarchy reads like a fabrication drawing: a light line that says what it is, a heavy line that says what it does.
 
-## Type
-- **Geologica** (display). Two settings only: weight 160 for the light line, weight 860 with sharpness (SHRP) 100 for the heavy line. The sharp axis cuts the terminals like sheared steel. Headings always pair the two: light phrase on top, heavy phrase below.
-- **Geist** (body and UI), 400 and 500.
-- **Geist Mono**, only for labels that behave like stamped part markings (zone numbers, coordinates). Never as decorative eyebrows.
+The site is dark and cinematic: the workshop seen at night under one red light. Inex's own phone videos are colour graded dark (more contrast, less saturation, cool shadows, warm highlights, a vignette) and run full screen. Bone-coloured sections cut between the dark ones so the page has a rhythm. Every headline pairs a hairline light word with a heavy black word, and a red block slides in behind the one word that matters.
 
 ## Colour
-| Token | Hex | Use |
+
+| Token | Value | Use |
 | --- | --- | --- |
-| ink | #0d0e10 | dark sections, text on light |
-| ink-2 | #17191c | panels on dark |
-| steel-0 | #f3f4f5 | light sections |
-| steel-1 | #e6e8eb | plates, rules |
-| steel-2 | #c9cdd2 | borders |
-| steel-3 | #8f969e | secondary text on dark |
-| steel-4 | #5a6067 | secondary text on light |
-| red | #d6141c | the seam, primary action, active state |
-| red-deep | #9e0c12 | pressed state, gradients |
+| `--char` | #0F1012 | Base. Hero, kitchens, process, equipment, crew, order, footer |
+| `--char-2/3` | #17181B / #222327 | Cards, placeholders |
+| `--bone` | #EFEDE7 | Light sections: statement, "Made in Unawatuna", handed over, visit |
+| `--red` | #E01B22 | Inex red. Highlight blocks, CTAs, step numbers, the stamp, the "Approved" screen |
+| `--wa` | #1FAF57 | WhatsApp send button only |
 
-The brushed steel gradient from the logo (#2b2d31 → #b9bdc2 → #4a4e54) is used only on product plates and the footer wordmark.
+## Type
 
-## Shape
-- Corners are chamfered (clip-path, 12px cut), never rounded.
-- The red seam is a parallelogram skewed -38°, the same angle as the logo's X.
-- Photos are cut with a diagonal edge where they meet text.
+- **Big Shoulders Display**, always in capitals. Weight 200 for the light line and 900 for the bold line. On bone, the light line is ink at 40%. On dark, it's bone at 60%.
+- **Inter Tight** for body text. **IBM Plex Mono** for labels, indexes and the plate engraving.
+- Inputs are at least 16 px so iPhones don't zoom.
 
-## Layout grammar (each section a different structure)
-1. Hero: split, type on ink, installed kitchen photo with a diagonal cut edge.
-2. Zones: a five-stop rail (Store, Prep, Cook, Wash, Serve) that swaps a cut-out product plate.
-3. Made to fit: pinned 3D burner table that turns with scroll, steps on the left.
-4. Workshop: broken editorial collage.
-5. Floor to floor: full-bleed diagonal split that moves with scroll.
-6. Who we build for: a type wall with a photo that follows the pointer.
-7. Installed work: native horizontal scroll-snap strip.
-8. Process: four stops on a seam line.
-9. Brief: a WhatsApp message builder.
-10. Visit: map, address, building photo.
+## Layout: a different structure in every section
+
+1. **Hero.** A full-screen film in four chapters (crew, cut, fold, build) with progress tabs. Each new clip wipes in from the right. As you scroll, the film shrinks into a rounded card.
+2. **Statement** (bone). Two-tone capitals with small looping videos set inline in the text, and three count-up facts.
+3. **Kitchens.** Six vertical photo strips that expand on hover or tap. On phones they become an accordion.
+4. **Process.** Pinned full screen for five screens of scrolling. Each step's clip wipes up over the last one, with a giant outlined step number, the step title and a 5-point timeline.
+5. **Made in Unawatuna** (bone). The video plays through the letters, and the words zoom into place as they arrive.
+6. **Equipment.** Stacked sticky cards. Each card sinks and darkens as the next one slides over it. The four-burner range is a 3D model you can turn.
+7. **Handed over** (bone). A sticky heading next to three photo columns that move at different speeds.
+8. **Crew.** Full-screen video with a big quote, plus a floating portrait clip.
+9. **Order.** The nameplate engraves as you type. When you stamp it, the whole screen turns red, "APPROVED" slams in with sparks, then the plate gets stamped and the WhatsApp button pulses.
+10. **Visit** (bone) and a footer with the INEX wordmark filled with video.
 
 ## Motion
-Crisp and mechanical. UI 160 to 240ms on cubic-bezier(.23,1,.32,1). Reveals wipe in with clip-path from the left, like a cut being made (600ms). Press feedback scale(.97). Hover only behind (hover:hover) and (pointer:fine). Reduced motion keeps fades and drops movement and the 3D turn.
+
+- Easing: `--ease-out` cubic-bezier(.23,1,.32,1) for entrances and `--ease-io` for wipes. Press feedback is a scale to 0.97 in 160 ms.
+- Lines rise out of masks, the hero headline rises letter by letter, and the red highlight bars sweep in after the text.
+- Smooth wheel scrolling (Lenis) is on desktop mice only. Touch scrolling stays native.
+- Hover effects only apply on devices that can hover. Magnetic buttons are desktop only.
+- Reduced motion turns off the intro, reveals, wipes, card stacking, parallax and the full-screen "Approved" moment, and shows the stamped plate directly.

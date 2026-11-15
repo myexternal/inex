@@ -1,39 +1,36 @@
-/* Inex: 3D burner table (Higgsfield image-to-3D from Inex's own photo), turned by scroll and drag */
-// three.js (~170 KB gzipped) is only fetched when the visitor gets near this section
+/* Inex v3 · 3D four-burner range (Higgsfield image-to-3D from a frame of Inex's own video).
+   three.js is only fetched when the visitor gets near the equipment cards. Renders on demand. */
 let THREE;
-
-const section = document.querySelector('.build');
-const canvas = document.querySelector('[data-canvas]');
+const cell = document.querySelector('[data-3d]');
+const canvas = cell && cell.querySelector('[data-canvas]');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function webglOK() {
   try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch { return false; }
 }
 
-if (section && canvas && webglOK()) {
+if (cell && canvas && webglOK()) {
   let started = false;
   const io = new IntersectionObserver(es => {
-    if (es[0].isIntersecting && !started) { started = true; init(); }
-  }, { rootMargin: innerWidth < 860 ? '300px 0px' : '600px 0px' });
-  io.observe(section);
+    if (es[0].isIntersecting && !started) { started = true; io.disconnect(); init(); }
+  }, { rootMargin: innerWidth < 860 ? '250px 0px' : '600px 0px' });
+  io.observe(cell);
 }
 
-// A dark photo studio: black room, long white softboxes and one red strip.
-// Polished steel only looks like steel when it has dark things to reflect.
+// dark studio with long softboxes: polished steel needs something to reflect
 function studio() {
   const env = new THREE.Scene();
-  const room = new THREE.Mesh(new THREE.BoxGeometry(10, 6, 10), new THREE.MeshBasicMaterial({ color: 0x4a4d53, side: THREE.BackSide }));
-  env.add(room);
+  env.add(new THREE.Mesh(new THREE.BoxGeometry(10, 6, 10), new THREE.MeshBasicMaterial({ color: 0x6a7378, side: THREE.BackSide })));
   const box = (w, h, color, x, y, z, ry = 0, rx = 0) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }));
     m.position.set(x, y, z); m.rotation.set(rx, ry, 0); env.add(m);
   };
-  box(6, 1.2, 0xffffff, 0, 2.9, 0, 0, Math.PI / 2);         // overhead strip
-  box(1.0, 3.6, 0xf2f4f8, -4.9, 0.6, 1.5, Math.PI / 2);      // left softbox
-  box(0.5, 3.2, 0xdfe6ff, 4.9, 0.4, -1.2, -Math.PI / 2);     // right strip, cool
-  box(2.2, 0.22, 0x9e0c12, 2.2, -0.6, -4.9);                 // red strip behind
-  box(7, 3.2, 0xffffff, 0, 1.0, 4.9, Math.PI);            // big soft panel behind the camera
-  box(10, 10, 0x3a3d42, 0, -2.95, 0, 0, Math.PI / 2);        // floor bounce
+  box(6, 1.2, 0xffffff, 0, 2.9, 0, 0, Math.PI / 2);
+  box(1.0, 3.6, 0xf2f4f8, -4.9, 0.6, 1.5, Math.PI / 2);
+  box(0.6, 3.2, 0xd8f0f2, 4.9, 0.4, -1.2, -Math.PI / 2);
+  box(2.2, 0.22, 0xa00d14, 2.2, -0.6, -4.9);
+  box(7, 3.2, 0xffffff, 0, 1.0, 4.9, Math.PI);
+  box(10, 10, 0x2c3336, 0, -2.95, 0, 0, Math.PI / 2);
   return env;
 }
 
@@ -46,106 +43,104 @@ async function init() {
       import('../vendor/jsm/loaders/GLTFLoader.js'),
       import('../vendor/jsm/libs/meshopt_decoder.module.js'),
     ]);
-  } catch (e) { console.warn('3D unavailable, keeping photo', e); return; }
-  // high-density phone screens don't need MSAA on top of 1.5x rendering
+  } catch (e) { console.warn('3D unavailable, keeping the photo', e); return; }
+
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: devicePixelRatio < 2, alpha: true, powerPreference: small ? 'default' : 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.1;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(studio(), 0.02).texture;
+  pmrem.dispose();
 
-  const camera = new THREE.PerspectiveCamera(26, 1, 0.05, 50);
+  const camera = new THREE.PerspectiveCamera(24, 1, 0.05, 50);
+  const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(-2, 3, 2.5); scene.add(key);
+  const rim = new THREE.PointLight(0xff3030, small ? 1.2 : 2.2, 5, 1.8); rim.position.set(1.2, 0.35, -1.4); scene.add(rim);
+  const fill = new THREE.PointLight(0xf4f6f8, 1.1, 6, 2); fill.position.set(-1.6, 0.3, 1.2); scene.add(fill);
 
-  // lights: soft key + the brand's red rim from behind-right
-  const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-2, 3, 2.5); scene.add(key);
-  const rim = new THREE.PointLight(0xff2a2a, small ? 3 : 6, 6, 1.6); rim.position.set(1.4, 0.7, -1.4); scene.add(rim);
-  const fill = new THREE.PointLight(0x9fb4ff, 1.2, 6, 2); fill.position.set(-1.6, 0.2, 1.2); scene.add(fill);
-
-  // contact shadow
-  const sh = document.createElement('canvas'); sh.width = sh.height = 256;
-  const g = sh.getContext('2d'); const grd = g.createRadialGradient(128, 128, 10, 128, 128, 128);
-  grd.addColorStop(0, 'rgba(0,0,0,.75)'); grd.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = grd; g.fillRect(0, 0, 256, 256);
-  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sh), transparent: true, depthWrite: false }));
-  shadow.rotation.x = -Math.PI / 2;
-  scene.add(shadow);
+  // soft contact shadow
+  const sh = document.createElement('canvas'); sh.width = sh.height = 128;
+  const g = sh.getContext('2d'); const grd = g.createRadialGradient(64, 64, 4, 64, 64, 64);
+  grd.addColorStop(0, 'rgba(0,0,0,.8)'); grd.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = grd; g.fillRect(0, 0, 128, 128);
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sh), transparent: true, depthWrite: false }));
+  shadow.rotation.x = -Math.PI / 2; scene.add(shadow);
 
   const pivot = new THREE.Group(); scene.add(pivot);
   let model;
   try {
-    // phones get a 0.4 MB model; desktops a finer 1.2 MB one (both meshopt-compressed)
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    const gltf = await loader.loadAsync(small ? 'media/range-m.glb' : 'media/range.glb');
+    const gltf = await loader.loadAsync(small ? 'media/range3d-m.glb' : 'media/range3d.glb');
     model = gltf.scene;
-  } catch (e) { console.warn('3D model failed, keeping photo', e); return; }
+  } catch (e) { console.warn('3D model failed, keeping the photo', e); return; }
 
   model.traverse(o => {
     if (!o.isMesh) return;
     const src = o.material;
-    // only the normal map is used; free the colour and ORM images straight away
-    ['map', 'metalnessMap', 'roughnessMap', 'aoMap', 'emissiveMap'].forEach(k => src[k] && src[k] !== src.normalMap && src[k].dispose());
-    src.dispose();
+    // keep the photo colours (red knobs, brass); swap the baked metal map for brushed steel that reads well in the dark cell
+    if (src.metalnessMap) src.metalnessMap.dispose();
     o.material = new THREE.MeshStandardMaterial({
-      color: 0xc8cdd3, metalness: 1, roughness: 0.36,
-      normalMap: src.normalMap || null,
-      envMapIntensity: 1.6,
+      map: src.map, normalMap: src.normalMap || null,
+      metalness: 0.68, roughness: 0.34, envMapIntensity: 1.9,
     });
+    src.dispose();
   });
-  // centre and sit on the floor
   const box = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3()); const c = box.getCenter(new THREE.Vector3());
   model.position.set(-c.x, -box.min.y, -c.z);
   pivot.add(model);
-  shadow.scale.set(size.x * 1.25, size.z * 1.6, 1);
+  shadow.scale.set(size.x * 1.5, size.z * 1.9, 1);
   shadow.position.y = 0.002;
-  const target = new THREE.Vector3(0, size.y * 0.46, 0);
+  // on narrow cells the caption sits over the lower third, so aim lower to lift the model
+  const tall = () => canvas.clientHeight / Math.max(1, canvas.clientWidth) > 1.05;
+  const target = new THREE.Vector3(0, size.y * 0.5, 0);
 
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // fit the model: distance from its largest dimension
-    const fit = Math.max(size.x, size.y * camera.aspect * 0.9) / camera.aspect;
-    const dist = (Math.max(fit, size.y) * 1.25) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * (camera.aspect < 1 ? 0.9 : 0.52);
-    camera.userData.dist = dist;
+    const half = THREE.MathUtils.degToRad(camera.fov / 2);
+    const needH = size.y * (small ? 1.62 : 1.42), needW = Math.max(size.x, size.z) * 1.35;
+    target.y = size.y * (small ? 0.3 : 0.46);
+    camera.userData.dist = Math.max(needH / 2 / Math.tan(half), needW / 2 / (Math.tan(half) * camera.aspect));
     camera.updateProjectionMatrix();
   }
   resize();
-  addEventListener('resize', resize);
+  new ResizeObserver(() => { resize(); wake(); }).observe(canvas);
 
-  // ----- input: scroll progress + drag with inertia. Renders on demand, then sleeps -----
-  let drag = 0, dragV = 0, dragging = false, lastX = 0, step = 0;
-  canvas.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; canvas.setPointerCapture(e.pointerId); wake(); });
-  canvas.addEventListener('pointermove', e => { if (!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; dragV = dx * 0.008; drag += dragV; wake(); });
+  // input: drag with inertia, scroll adds a slow turn. Sleeps when nothing moves.
+  let drag = 0, dragV = 0, dragging = false, lastX = 0, lastY = 0, axis = 0;
+  canvas.addEventListener('pointerdown', e => { dragging = true; axis = 0; lastX = e.clientX; lastY = e.clientY; wake(); });
+  canvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX, dy = e.clientY - lastY;
+    if (!axis && Math.hypot(dx, dy) > 6) { axis = Math.abs(dx) > Math.abs(dy) ? 1 : 2; if (axis === 1) canvas.setPointerCapture(e.pointerId); }
+    if (axis !== 1) return;
+    lastX = e.clientX; lastY = e.clientY;
+    dragV = dx * 0.009; drag += dragV; wake();
+  });
   const end = () => { dragging = false; };
-  canvas.addEventListener('pointerup', end); canvas.addEventListener('pointercancel', end);
-  addEventListener('inex:step', e => { step = e.detail; wake(); });
+  canvas.addEventListener('pointerup', end); canvas.addEventListener('pointercancel', end); canvas.addEventListener('lostpointercapture', end);
   addEventListener('scroll', () => wake(), { passive: true });
-  addEventListener('resize', () => wake());
 
+  const media = cell.querySelector('.card__media');
   const progress = () => {
-    const r = section.getBoundingClientRect();
+    const r = cell.getBoundingClientRect();
     return Math.min(1, Math.max(0, (innerHeight - r.top) / (r.height + innerHeight)));
   };
+  let visible = true, rotY = -2.4, elev = 0.22;
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) wake(); }).observe(cell);
 
-  let visible = true, rotY = -1.15, elev = 0.28;
-  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) wake(); }).observe(section);
-
-  // per-step camera elevation: front, three-quarter, top-down onto the burners, low for the under-shelf
-  const ELEV = [0.28, 0.38, 0.72, 0.12];
-
-  // returns true while still moving
   function frame() {
     const p = progress();
-    if (!dragging) { dragV *= 0.92; drag += dragV; }
-    const targetRot = reduce ? -0.5 : (-1.15 + p * 2.3);
-    const targetElev = reduce ? 0.3 : (ELEV[step] ?? 0.3);
+    if (!dragging) { dragV *= 0.93; drag += dragV; }
+    const targetRot = reduce ? -1.25 : (-1.75 + p * 0.95);
+    const targetElev = reduce ? 0.2 : 0.12 + p * 0.22;
     const dr = targetRot + drag - rotY, de = targetElev - elev;
-    rotY += dr * 0.08;
-    elev += de * 0.05;
+    rotY += dr * 0.075; elev += de * 0.06;
     pivot.rotation.y = rotY;
     const d = camera.userData.dist;
     camera.position.set(0, target.y + d * Math.sin(elev), d * Math.cos(elev));
@@ -161,7 +156,7 @@ async function init() {
   }
   frame();
   canvas.classList.add('is-ready');
-  section.classList.add('has-3d');
+  cell.classList.add('has-3d');
   wake();
   window.__inex3d = { frame, scene, camera, renderer };
 }

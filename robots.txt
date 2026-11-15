@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://inex-24tf.onrender.com/sitemap.xml
