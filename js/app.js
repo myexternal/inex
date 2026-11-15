@@ -10,10 +10,8 @@
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const easeOut = t => 1 - Math.pow(1 - t, 3);
   const easeIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  // slow connections get posters instead of video
-  const conn = navigator.connection;
-  const slowNet = !!(conn && (/(^|-)2g$|^3g$/.test(conn.effectiveType || '') || (conn.downlink && conn.downlink < 1.2)));
-  const autoplay = !reduce && !saveData && !slowNet;
+  // the films are the design: they always play, except for people who ask for reduced motion
+  const autoplay = !reduce;
   if (!autoplay) root.classList.add('no-autoplay');
 
   /* ---------- smooth scroll (desktop wheel only, loaded only there) ---------- */
@@ -132,6 +130,9 @@
     loadVid(v); const p = v.play(); if (p) p.catch(() => {});
   }
   function stop(v) { if (!v) return; delete v.dataset.want; waiting.delete(v); if (!v.paused) v.pause(); }
+  // iOS Low Power Mode blocks autoplay until the first touch: retry then
+  const kick = () => { $$('video').forEach(v => { if (v.dataset.want && v.paused) { loadVid(v); const p = v.play(); if (p) p.catch(() => {}); } }); };
+  ['touchend', 'pointerdown', 'keydown'].forEach(ev => addEventListener(ev, kick, { passive: true }));
   addEventListener('load', () => {
     pageLoaded = true;
     setTimeout(() => { waiting.forEach(v => { if (v.dataset.want) play(v); }); waiting.clear(); }, 200);

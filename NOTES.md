@@ -50,7 +50,7 @@ What changed for speed:
 - CSS and JS are minified (`css/site.min.css`, `js/app.min.js`). The readable `site.css` and `app.js` are kept next to them for edits; re-minify after changing them, or point `index.html` back at the readable files.
 - Photos below the first screen only load when you scroll near them. Phones get the smaller photo sizes.
 - The hero's next clip and poster load just before they're needed, not all at once.
-- On slow connections (2G/3G or under about 1.2 Mbps), on Data Saver, and with Reduce Motion, videos don't autoplay and the posters show instead.
+- Videos always play, on every connection (on slow ones the poster shows until the clip has buffered). Only Reduce Motion stops them. On iPhones in Low Power Mode, iOS blocks autoplay until the first tap, so the site starts the videos on the first touch.
 - The smooth-scroll script loads only on desktop computers with a mouse, after the page has loaded.
 - three.js and the 3D model still load only near the equipment cards.
 
