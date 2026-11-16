@@ -1,17 +1,32 @@
-# Inex Kitchen Solutions v3: build notes
+# Inex Kitchen Solutions v4 "Daylight": build notes
 
-Upload the folder as it is. It's all static (HTML, CSS, vanilla JS, three.js and Lenis in `vendor/`, fonts in `fonts/`). The 3D model won't load from `file://`, so test it through a server or on Render.
+Upload the folder as it is. It is all static: HTML, CSS and vanilla JS, with fonts in `fonts/` and the smooth-scroll script in `vendor/`. There is no three.js in this version. Test it through a server or on Render, not by double-clicking `index.html`.
 
-v1 (`../inex-kitchen/`) and v2 (`../inex-kitchen-v2/`) are kept for comparison.
+v1 (`../inex-kitchen/`), v2 (`../inex-kitchen-v2/`) and v3 (`../inex-kitchen-v3/`) are kept for comparison.
 
-## What's new in v3
+## What is new in v4
 
-- **New look:** the "Forge" design system (see `DESIGN.md`). It's dark and cinematic, uses full-screen graded footage, and has a different layout in every section.
-- **16 new clips** from the new crew videos (new polos only), colour graded dark. Each has a wide cut (1280×720) and a tall cut for phones (540×960), at 0.2 to 0.47 MB each.
-- **Studio shots** of the wok range, the four-burner range, the deck oven and the twin fryers. They were made with Higgsfield from frames of Inex's own videos and put on a dark studio background. **They are AI-generated versions of their real units, so please have Inex check the details look right.**
-- **The CTA:** the visitor fills in the plate. On "Stamp my order", the whole screen goes red and "APPROVED for fabrication" slams in with sparks (and a buzz on phones). Then the plate gets stamped and a pulsing WhatsApp button sends the order to +94 77 665 4172.
-- **"Ask about this"** on each piece of equipment jumps to the form with that item already ticked.
-- The nameplate on the site says **"Kitchen Solutions"**. Note that the real metal plate in their videos reads "Kitchen Equipment", and step 5 of "How a kitchen gets made" shows that real plate in the clip. If that shouldn't appear, swap clip `s5`.
+- **Bright and clean.** Warm paper background, white cards, steel photography, one red for actions. The design system is in `DESIGN.md`.
+- **Light and bold type.** Every headline pairs a weight-200 line with a weight-800 line of the same typeface (Bricolage Grotesque).
+- **Hierarchy.** One job per section, in this order: what Inex does, how a kitchen is made, what kinds of kitchen, the equipment, the real workshop, the five steps, the quote, the visit.
+- **A different layout in every section:** framed photo hero, centred statement, pinned scroll film, bento grid, product feature with a turntable plus a rail, staggered portrait clips, sticky two-column steps, dark split panel, contact list beside a photo card.
+- **Scroll film ("It starts as flat steel").** As you scroll, raw sheet, tube and burner rings assemble into the wok range, the range takes its place in a full kitchen, and the burners light.
+- **360° wok range.** Drag it (or use the arrow keys) to turn it round.
+- **The CTA, "Light it up".** The quote form ends on an ignition knob. On submit the burner lights across the whole screen with "Flame on.", then the panel stays lit and one green button sends the request to WhatsApp on +94 77 665 4172. Tiles and "Ask about this" links pre-tick the form.
+- **Real crew, real workshop.** Five clips from the new videos (petrol polos only) and one still of the crew in the visit card.
+
+## What is AI-made, and what is real
+
+Please have Inex look at these before it goes live.
+
+| On the site | What it is |
+| --- | --- |
+| Workshop clips (Mark out, Fold, Finish, Check, Ready), hero mini clip, crew photo in "Visit" | **Real.** Cut from IMG_0891, 0910, 0915, 0917, 0925 and 0927, lightly graded |
+| Hero photo and the seven "Kitchens" photos | **AI re-shoots of their real installs** (made with Higgsfield from their own WhatsApp photos, cleaned up and relit). The layout of each kitchen follows the real one, but small details can differ |
+| Wok range, four-burner range, deck oven, fryers, griddle product shots | **AI studio versions of real units** seen in their photos and videos |
+| Scroll film, 360° turntable, burner ignition | **Illustrations made with Higgsfield.** The film is labelled on the page: "Illustration of our process. The wok range is modelled on a real Inex unit." |
+
+If Inex would rather show only untouched photos, the hero and the kitchen tiles are the ones to swap. I would need sharper originals than the WhatsApp copies.
 
 ## Questions for Inex before this goes live
 
@@ -20,51 +35,45 @@ Unverified claims are **not on the site**:
 | Item | Status | What I need |
 | --- | --- | --- |
 | "Since 2009", "17+ years", "600+ projects", "5.0 Google rating", warranty | Kept off | Real numbers if they want them shown |
-| Stainless grades (whiteboard in IMG_0894: "202 / 304, 1.0") | Not on the site | Which grades they use, if they want it shown |
-| Deck oven, twin fryers, four-burner range | Described as "on our floor", not "built by us" | Did Inex make these? Only the wok range says "Built here" |
-| The three facts (5 steps, 1 crew, 1 plate on every unit) | Taken from their process and videos | Fine unless they work differently |
-| "Fitted in kitchens around the south" | A soft guess from the photos | Real service area |
-| Opening hours | Not found | Until then the site says "please call before you visit" |
+| Stainless grades | Not on the site. The wok range says "Welded stainless steel" only | Which grades they use |
+| Four-burner range, deck oven, fryers, griddle | Shown as equipment that goes into the line, with no "made here" claim. Only the wok range says "Made in our workshop" | Does Inex make these or supply them? |
+| "Rings: two, or as many as your line needs" and "Length: made to your wall" | My wording from their made-to-measure work | Confirm they do build wok ranges to any length |
+| Service area | Not stated anywhere | Where they deliver and install |
+| Opening hours | Not on the site | Hours, if they want walk-ins |
+| The five steps (Measure, Draw, Build, Fit, Fire up) | My reading of how they work. "We come to your site" and "we test every burner and stay until it works" are promises | Confirm, or tell me the real steps |
+| Kitchen types: restaurants, hotels, buffets, seafood, hot holding, bars and cafés, homes | Taken from their install photos | Remove any they do not want to sell |
 
-## The work order reference
+## The quote reference
 
-"INX-YYMM-1234" is made in the browser. Nothing is stored or sent until the visitor taps "Send on WhatsApp", and then it's just text in the message.
+"INX-YYMM-1234" is made in the browser. Nothing is stored or sent until the visitor taps "Send it on WhatsApp" or "Email it instead", and then it is just text in that message. There is no database and no form backend.
 
-## Before launch
+## Tested
 
-- `og:image`, `og:url` and `canonical` point to `https://inex-24tf.onrender.com/` (the share image is `media/share.jpg`). If v3 goes on another address, change those three lines.
-- The map only loads when someone taps "Show the map".
+- 125 click-checks pass at 390, 820, 1024, 1440 and 1920 pixels wide: menu and nav links, film chapters, tiles and "Ask" links pre-ticking the form, turntable drag, form errors, the ignition, the WhatsApp and email links, "Change the details", the map, the phone dock, no sideways scroll, no broken images, no invisible elements catching taps, no script errors.
+- Headlines fit at 12 widths from 320 to 1920.
+- This was tested in Chromium with phone emulation. It has **not** been tested on a real iPhone or Android phone. Please open it on your own phone once before showing the client.
 
 ## Speed
 
 Measured on a throttled iPhone-sized phone (4× slower CPU) through a server that compresses files like Render does:
 
-| Connection | First screen downloads | First paint | Page ready |
+| Connection | First screen downloads | First paint | Largest picture shown |
 | --- | --- | --- | --- |
-| Slow 3G (0.4 Mbps, 400 ms) | 130 KB (was 802 KB) | 2.6 s (was 4.5 s) | 3.5 s (was 17.9 s) |
-| Fast 3G (1.6 Mbps) | 130 KB | 1.5 s | 1.6 s |
-| 4G (9 Mbps) | 130 KB | 0.8 s | 0.7 s |
+| 4G (9 Mbps, 150 ms) | 246 KB | 1.0 s | 1.0 s |
+| Slow (1.6 Mbps, 300 ms) | 246 KB | 1.5 s | 2.1 s |
 
-What changed for speed:
-- Fonts are now self-hosted in `fonts/`, cut down to the characters the site uses (65 KB instead of 95 KB, and no extra trips to Google).
-- CSS and JS are minified (`css/site.min.css`, `js/app.min.js`). The readable `site.css` and `app.js` are kept next to them for edits; re-minify after changing them, or point `index.html` back at the readable files.
-- Photos below the first screen only load when you scroll near them. Phones get the smaller photo sizes.
-- The hero's next clip and poster load just before they're needed, not all at once.
-- Videos always play, on every connection (on slow ones the poster shows until the clip has buffered). Only Reduce Motion stops them. On iPhones in Low Power Mode, iOS blocks autoplay until the first tap, so the site starts the videos on the first touch.
-- The smooth-scroll script loads only on desktop computers with a mouse, after the page has loaded.
-- three.js and the 3D model still load only near the equipment cards.
+- The whole page is about 3.6 MB on a phone if someone scrolls all of it, most of it the film frames, which load only when the film is near.
+- Videos always play on every connection. Only the Reduce Motion setting stops them (the film still follows the scroll because the visitor drives it, and the form skips the ignition). On iPhones in Low Power Mode, iOS blocks autoplay until the first touch, so the site starts the clips on the first tap.
+- Phones get an 800-pixel version of the film. Desktops get 1280.
+- CSS and JS are minified (`css/site.min.css`, `js/app.min.js`). The readable `site.css` and `app.js` sit next to them. After editing them, re-minify or point `index.html` at the readable files.
+
+## Before launch
+
+- `canonical`, `og:url`, `og:image` and the business markup point to `https://inex-24tf.onrender.com/`. If v4 goes on another address, replace that address in `index.html`, `sitemap.xml` and `robots.txt`.
+- The share image is `media/share.jpg` (1200×630).
+- The Google map loads only when someone taps "Show the map".
 
 ## SEO
 
-- The title and description name the service and the place: "Commercial Kitchens in Sri Lanka | Inex Kitchen Solutions, Unawatuna".
-- Business details are marked up for Google (LocalBusiness schema): name, address, map pin, phone, email, Facebook and services. Nothing unverified (hours, ratings, years) is in it.
-- The main heading includes "Inex Kitchen Solutions: commercial kitchens built in Unawatuna, Sri Lanka" for search engines and screen readers. Visitors still see "Cut. Fold. Weld. Serve."
-- `robots.txt` and `sitemap.xml` are included. Share tags (Facebook, WhatsApp, X) have the image size and alt text set.
-- **When the site moves to its own domain**, replace `https://inex-24tf.onrender.com` everywhere in `index.html`, `robots.txt` and `sitemap.xml`. Then add the site in Google Search Console and submit the sitemap.
-- The biggest SEO win from here is off the site: a Google Business Profile for the workshop with photos and reviews, linked to this site.
-
-## Checked
-
-- Every big headline measured at 12 widths from 320 to 1920 px, so none get cut off (fixed "MEASURE" on large screens and "RESTAURANTS" on small phones).
-- Click-tested at 390, 820, 1024, 1440 and 1920 px wide in Chromium: hero chapters, menu, anchors, kitchen strips, the pinned process, "Ask about this", form errors, engraving, the full-screen "Approved" moment, the WhatsApp message, "Change something", the map and the 3D load. No script errors, no failed requests and no sideways scroll at any width.
-- **Not checked on a real phone.** Please open it on an iPhone and an Android before sending it to Inex, especially video autoplay, the pinned process section and the stacked cards.
+- Title: "Commercial Kitchens in Sri Lanka | Inex Kitchen Solutions, Unawatuna". The H1 carries a full sentence for search engines and the short headline for people.
+- Business details are marked up for Google (LocalBusiness): name, address, map pin, phone, email and Facebook. Nothing unverified (hours, ratings, years) is in it.
