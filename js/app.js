@@ -487,14 +487,16 @@
 
   /* ---------- phone dock ---------- */
   const dock = $('[data-dock]');
-  const order = $('#order'), visit = $('#visit'), foot = $('.foot'), equip = $('#equipment');
+  const order = $('#order'), foot = $('.foot');
+  // one simple rule, so it never blinks: on from the end of the hero, off only while the order form
+  // (which has its own big button) or the footer is on screen, or the menu is open
   function dockUpdate() {
     if (!dock || getComputedStyle(dock).display === 'none') return;
-    const past = hero.getBoundingClientRect().bottom < innerHeight * .2;
-    const inZone = el => { const r = el.getBoundingClientRect(); return r.top < innerHeight * .8 && r.bottom > 0; };
-    const pr = proc.getBoundingClientRect();
-    const inProc = pr.top < innerHeight * .5 && pr.bottom > innerHeight * .5;
-    dock.classList.toggle('is-on', past && !menuOpen && !inProc && !root.classList.contains('in-film') && !inZone(order) && !inZone(visit) && !inZone(foot) && !inZone(equip));
+    const vh = innerHeight, o = order.getBoundingClientRect();
+    const past = hero.getBoundingClientRect().bottom < vh * .5;
+    const atForm = o.top < vh * .6 && o.bottom > vh * .4;
+    const atFoot = foot.getBoundingClientRect().top < vh - 40;
+    dock.classList.toggle('is-on', past && !menuOpen && !atForm && !atFoot);
   }
 
   /* ---------- one scroll loop ---------- */

@@ -587,6 +587,18 @@ html:not(.js) .hl::before { transform: none; }
   }
   .dock i { width: 44px; height: 44px; background: #fff; color: var(--red); font-size: 18px; }
   .dock.is-on { transform: none; }
+  /* the dock stays up through the page, so whatever sits at the bottom of a pinned screen clears it */
+  .film__cap { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .proc__ui { padding-bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
+  .card { height: min(calc(100svh - var(--nav-h) - 132px), 740px); }
+  /* the text always fits; the picture takes whatever height is left */
+  .card__in { grid-template-rows: minmax(110px, 1fr) auto; }
+}
+@media (max-width: 860px) and (max-height: 820px) {
+  .card .specs { display: none; }
+  .card__body { padding: 16px 20px 18px; gap: 10px; }
+  .card__body h3 { font-size: clamp(38px, 11vw, 60px); }
+  .card__body p { font-size: 14px; line-height: 1.42; }
 }
 @media (max-width: 760px) {
   body { font-size: 16px; }
