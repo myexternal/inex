@@ -1,50 +1,60 @@
-# Inex v3 · "Forge" design system
+# Daylight: the Inex Kitchen Solutions v4 design system
 
-v3 replaces v2 ("Work Order") and v1 ("Sheet and Seam"). It shares no layout, type or components with them or with any other client site.
+Daylight belongs to this site only. It shares no layout, palette or type with v1, v2, v3 ("Forge") or any other client site.
 
 ## Idea
 
-The site is dark and cinematic: the workshop seen at night under one red light. Inex's own phone videos are colour graded dark (more contrast, less saturation, cool shadows, warm highlights, a vignette) and run full screen. Bone-coloured sections cut between the dark ones so the page has a rhythm. Every headline pairs a hairline light word with a heavy black word, and a red block slides in behind the one word that matters.
+A clean, daylit showroom for steel. The page is warm paper, the steel is the colour, and the only loud thing is the red you press. The single dark moment is the quote panel, so the flame has somewhere to glow.
 
 ## Colour
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--char` | #0F1012 | Base. Hero, kitchens, process, equipment, crew, order, footer |
-| `--char-2/3` | #17181B / #222327 | Cards, placeholders |
-| `--bone` | #EFEDE7 | Light sections: statement, "Made in Unawatuna", handed over, visit |
-| `--red` | #E01B22 | Inex red. Highlight blocks, CTAs, step numbers, the stamp, the "Approved" screen |
-| `--wa` | #1FAF57 | WhatsApp send button only |
+| `--paper` | `#F1EFEC` | Page background. The film frames are colour-matched to it so they float with no visible edge |
+| `#FFFFFF` | white | Cards, the nav pill, the equipment sheet |
+| `--ink` | `#131416` | Text and dark buttons |
+| `--ink-2` / `--ink-3` | `#55585D` / `#85888D` | Body text, labels |
+| `--steel` / `--steel-2` | `#E6E3DF` / `#CFCCC7` | Image wells, hairlines |
+| `--red` | `#E01B22` | Actions only: Get a quote, Light it up, the "Not on the list?" tile, eyebrow dots |
+| `--flame` | `#2E7BFF` | The lit burner only: quote eyebrow, reference number, glow |
+| `--wa` | `#1FAF57` | WhatsApp buttons only |
+| `--night` | `#0B0C0E` | The quote panel and the ignition screen |
+
+Rule: red means "press this". It is never decoration.
 
 ## Type
 
-- **Big Shoulders Display**, always in capitals. Weight 200 for the light line and 900 for the bold line. On bone, the light line is ink at 40%. On dark, it's bone at 60%.
-- **Inter Tight** for body text. **IBM Plex Mono** for labels, indexes and the plate engraving.
-- Inputs are at least 16 px so iPhones don't zoom.
+- **Display:** Bricolage Grotesque, variable. Every headline is two voices of the same face: a **200** line and an **800** line (`.l` and `.b`). Tracking -0.045 to -0.05em, line height 0.92 to 0.96.
+- **Text:** Hanken Grotesk 400 to 600.
+- Sizes: hero `clamp(46px, 6.9vw, 128px)`, section headline `clamp(38px, 5.5vw, 94px)`, body 16 to 19px.
+- Eyebrows: 12.5px, uppercase, 0.09em tracking, with a small square red dot.
 
-## Layout: a different structure in every section
+## Space and shape
 
-1. **Hero.** A full-screen film in four chapters (crew, cut, fold, build) with progress tabs. Each new clip wipes in from the right. As you scroll, the film shrinks into a rounded card.
-2. **Statement** (bone). Two-tone capitals with small looping videos set inline in the text, and three count-up facts.
-3. **Kitchens.** Six vertical photo strips that expand on hover or tap. On phones they become an accordion.
-4. **Process.** Pinned full screen for five screens of scrolling. Each step's clip wipes up over the last one, with a giant outlined step number, the step title and a 5-point timeline.
-5. **Made in Unawatuna** (bone). The video plays through the letters, and the words zoom into place as they arrive.
-6. **Equipment.** Stacked sticky cards. Each card sinks and darkens as the next one slides over it. The four-burner range is a 3D model you can turn.
-7. **Handed over** (bone). A sticky heading next to three photo columns that move at different speeds.
-8. **Crew.** Full-screen video with a big quote, plus a floating portrait clip.
-9. **Order.** The nameplate engraves as you type. When you stamp it, the whole screen turns red, "APPROVED" slams in with sparks, then the plate gets stamped and the WhatsApp button pulses.
-10. **Visit** (bone) and a footer with the INEX wordmark filled with video.
+- Section gap `--sec: clamp(104px, 13.5vw, 216px)`. Related things sit 8 to 24px apart, unrelated things a full section apart.
+- Radii 32, 24, 16. Buttons and chips are full pills.
+- Photos sit in rounded wells. Captions sit on white tags inside the photo, never on a dark gradient.
+
+## Layouts (one per section, none repeated)
+
+1. **Hero:** one photo in an inset rounded frame, copy bottom-left on a paper fade, a small live workshop clip bottom-right.
+2. **Statement:** one long sentence whose words darken as you read, then three facts under rules.
+3. **Film:** pinned for 5.6 screens. The picture floats on the paper, then grows into a rounded window. A four-step bar sits under it.
+4. **Kitchens:** bento grid of seven photo tiles and one red tile. Every tile opens the quote form with that kitchen ticked.
+5. **Equipment:** a white sheet. One feature (360° turntable plus a spec list), then a rail of four units.
+6. **Workshop:** five portrait clips, staggered up and down on desktop, a snap rail on phones.
+7. **Process:** sticky headline on the left, five numbered steps on the right that darken as they pass.
+8. **Quote:** dark rounded panel, burner on the left, form on the right.
+9. **Visit:** contact list on the left, photo-and-coordinates card on the right.
 
 ## Motion
 
-- Easing: `--ease-out` cubic-bezier(.23,1,.32,1) for entrances and `--ease-io` for wipes. Press feedback is a scale to 0.97 in 160 ms.
-- Lines rise out of masks, the hero headline rises letter by letter, and the red highlight bars sweep in after the text.
-- Smooth wheel scrolling (Lenis) is on desktop mice only. Touch scrolling stays native.
-- Hover effects only apply on devices that can hover. Magnetic buttons are desktop only.
-- Reduced motion turns off the intro, reveals, wipes, card stacking, parallax and the full-screen "Approved" moment, and shows the stamped plate directly.
+- One easing for entrances: `cubic-bezier(.23, 1, .32, 1)`. Reveals rise 20 to 28px once.
+- Buttons press to `scale(.97)`. Hover effects exist only for a real mouse.
+- The film and the turntable follow the hand directly: scroll position and drag distance, with a little inertia on release.
+- The big moment is saved for the end: the ignition plays once, full screen, about 3.5 seconds, and can be skipped with a tap, Esc or Enter.
+- Reduce Motion: no reveals, no autoplaying clips, the film still follows the scroll, the form goes straight to the lit panel.
 
-## v3.1: the film
+## The CTA
 
-- Pinned for 5.6 screens (5.2 on phones). Canvas frames on bone `#EFEDE7`, feathered into the page until the frame opens into a rounded window (28px, 18px on phones) on the finished kitchen; a sharp still replaces the last frame.
-- Heading in the section's own style: kicker `(02) How it's made`, "It starts as" in Big Shoulders 300 at 40% ink beside "flat steel." in 900. A mono "Scroll to build it" hint on wide screens.
-- Caption: a char card (22px radius) with four 2px progress bars filling in red, step number in red mono, step name in Big Shoulders 900, text in Inter Tight at 60% bone. The nav and the phone dock step aside while the film is pinned.
+Name: **Light it up.** Reward: **Flame on.** The visitor's last action lights the burner. It should feel like the kitchen has started, not like a form was sent.
